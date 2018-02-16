@@ -73,13 +73,47 @@ void SysTick_Handler(void)
 void EXTI0_1_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI0_1_IRQn 0 */
-
+if (__HAL_GPIO_EXTI_GET_IT( GPIO_PIN_0 ) != RESET) 
+  {
   /* USER CODE END EXTI0_1_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
   /* USER CODE BEGIN EXTI0_1_IRQn 1 */
-
+    __HAL_GPIO_EXTI_CLEAR_IT( GPIO_PIN_0 );
+  }
   /* USER CODE END EXTI0_1_IRQn 1 */
+}
+
+/**
+* @brief This function handles EXTI line 2 and 3 interrupts.
+*/
+void EXTI2_3_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI2_3_IRQn 0 */
+if (__HAL_GPIO_EXTI_GET_IT( GPIO_PIN_2 ) != RESET) 
+  {
+  /* USER CODE END EXTI2_3_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);
+  /* USER CODE BEGIN EXTI2_3_IRQn 1 */
+    __HAL_GPIO_EXTI_CLEAR_IT( GPIO_PIN_2 );
+  }
+  /* USER CODE END EXTI2_3_IRQn 1 */
+}
+
+/**
+* @brief This function handles EXTI line 4 to 15 interrupts.
+*/
+void EXTI4_15_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI4_15_IRQn 0 */
+
+  /* USER CODE END EXTI4_15_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_5);
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_6);
+  /* USER CODE BEGIN EXTI4_15_IRQn 1 */
+
+  /* USER CODE END EXTI4_15_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

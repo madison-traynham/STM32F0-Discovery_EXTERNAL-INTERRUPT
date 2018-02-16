@@ -49,6 +49,7 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 int blink_period = 250;
+int ambientLight = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -103,6 +104,19 @@ int main(void)
   /* USER CODE BEGIN 3 */
 	HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_8);
 	HAL_Delay(blink_period);
+		
+	if(ambientLight ==  1 )
+	{
+		HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_12);
+	}else if(ambientLight == 2)
+	{
+		HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_11);
+	}
+	else if(ambientLight == 3)
+	{
+		HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_10);
+	}
+	
   }
   /* USER CODE END 3 */
 
@@ -174,17 +188,26 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, LD4_Pin|LD3_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : PinA_Pin */
-  GPIO_InitStruct.Pin = PinA_Pin;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, LD2_Pin|LD1_Pin|LD0_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PinA_Pin Ambient_Pin */
+  GPIO_InitStruct.Pin = PinA_Pin|Ambient_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(PinA_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PinB_Pin */
   GPIO_InitStruct.Pin = PinB_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(PinB_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PA4 PA5 PA6 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LD4_Pin LD3_Pin */
   GPIO_InitStruct.Pin = LD4_Pin|LD3_Pin;
@@ -193,9 +216,22 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : LD2_Pin LD1_Pin LD0_Pin */
+  GPIO_InitStruct.Pin = LD2_Pin|LD1_Pin|LD0_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI2_3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI4_15_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
 
 }
 
@@ -213,6 +249,19 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
       blink_period = 1000;
     }
   }
+	
+	if(GPIO_Pin == GPIO_PIN_4)
+	{
+		ambientLight = 1;
+	}
+	if(GPIO_Pin == GPIO_PIN_5)
+	{
+		ambientLight = 2;
+	}
+	if(GPIO_Pin == GPIO_PIN_6)
+	{
+		ambientLight = 3;
+	}
 
 }
 /* USER CODE END 4 */

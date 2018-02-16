@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=C:/Users/mtraynha/Desktop/CUBEMX/ExternalInterrupts/Inc
+HeaderPath=C:/Users/mtraynha/Documents/GitHub/STM32F0-Discovery_EXTERNAL-INTERRUPT/ExternalInterrupts/Inc
 HeaderFiles=stm32f0xx_it.h;stm32f0xx_hal_conf.h;main.h;
-SourcePath=C:/Users/mtraynha/Desktop/CUBEMX/ExternalInterrupts/Src
+SourcePath=C:/Users/mtraynha/Documents/GitHub/STM32F0-Discovery_EXTERNAL-INTERRUPT/ExternalInterrupts/Src
 SourceFiles=stm32f0xx_it.c;stm32f0xx_hal_msp.c;main.c;
 
 [PreviousLibFiles]
